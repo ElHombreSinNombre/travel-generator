@@ -1,0 +1,7 @@
+.lightbox {
+  @apply fixed top-0 left-0 w-full h-full bg-black flex  justify-center items-center cursor-pointer z-50;
+
+  .img {
+    @apply aspect-auto h-[500px];
+  }
+}
