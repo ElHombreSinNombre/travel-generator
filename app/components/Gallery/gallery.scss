@@ -1,0 +1,48 @@
+.gallery-container {
+  @apply relative mx-auto w-96 h-64;
+
+  .gallery {
+    @apply relative flex justify-center items-center h-full;
+
+    .img {
+      @apply cursor-pointer h-full w-full object-cover object-center rounded-md;
+    }
+
+    .arrows {
+      @apply border-2 border-black absolute top-1/2 w-10 h-10 rounded-full bg-white p-2 cursor-pointer flex justify-center items-center z-10;
+
+      &.left {
+        left: 20px;
+      }
+
+      &.right {
+        right: 20px;
+      }
+    }
+  }
+  .dots {
+    @apply cursor-pointer absolute flex justify-center items-center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px;
+
+    .dot {
+      @apply w-2 h-2 rounded-full bg-white border border-black;
+      margin: 0 5px;
+
+      &.active {
+        @apply bg-black border-white border;
+      }
+    }
+  }
+}
+
+.lightbox {
+  @apply fixed top-0 left-0 w-full h-full bg-opacity-100 bg-black flex bg-opacity-70 justify-center items-center cursor-pointer;
+  z-index: 999;
+
+  .img {
+    @apply aspect-auto h-[450px];
+  }
+}

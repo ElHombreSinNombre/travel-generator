@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-white;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-black;
+  border-radius: 10px;
+}
+
+@layer base {
+  .input,
+  .select {
+    @apply shadow appearance-none border rounded w-full my-2 py-3 px-4 text-gray-700 leading-tight;
+  }
+
+  .select {
+    @apply cursor-pointer;
+  }
+}
+
+.button {
+  @apply inline-flex items-center my-2 justify-center w-full border py-3 px-4 rounded-md select-none transition duration-500 ease-in-out;
+
+  &.primary {
+    @apply border-teal-400 bg-teal-400 text-white;
+  }
+
+  &.secondary {
+    @apply border-indigo-400 bg-indigo-400 text-white;
+  }
+}
+
+@layer components {
+  .center {
+    @apply flex items-center justify-center min-h-screen;
+  }
+
+  .card {
+    @apply bg-white shadow-md rounded  border p-6 transition duration-500 ease-in-out;
+  }
+
+  .toast {
+    @apply border px-4 py-3 rounded relative;
+
+    &.primary {
+      @apply bg-teal-100 border-teal-400 text-teal-700;
+    }
+
+    &.secondary {
+      @apply bg-indigo-100 border-indigo-400 text-indigo-700;
+    }
+
+    &.error {
+      @apply bg-red-100 border-red-400 text-red-700;
+    }
+  }
+
+  .spinner {
+    @apply h-5 w-5 animate-spin border-4 rounded-full border-solid border-current border-r-transparent;
+
+    &.primary {
+      @apply border-teal-400;
+    }
+
+    &.secondary {
+      @apply border-indigo-400;
+    }
+  }
+}
+
