@@ -55,7 +55,7 @@ function Searcher() {
   }, []);
 
   return (
-    <div>
+    <>
       {hasApiKey ? (
         <>
           <Select
@@ -71,7 +71,7 @@ function Searcher() {
           onChange={changeSelect}
         />
       )}
-    </div>
+    </>
   );
 }
 

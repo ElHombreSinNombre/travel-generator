@@ -1,5 +1,5 @@
 import { Itinerary } from "@/app/models/itinerary";
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface ItineraryState {
   itinerary: Itinerary[];
@@ -17,7 +17,5 @@ export const itinerarySlice = createSlice({
 export const { setItinerary } = itinerarySlice.actions;
 export default itinerarySlice.reducer;
 
-export const itineraryActivities = createSelector(
-  (state: { itinerary: ItineraryState }) => state.itinerary,
-  (itineraryState) => itineraryState.itinerary
-);
+export const itineraryActivities = (state: { itinerary: ItineraryState }) =>
+  state.itinerary.itinerary;

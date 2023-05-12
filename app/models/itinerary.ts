@@ -5,5 +5,5 @@ export type Itinerary = {
   activity: string;
   description: string;
   location: string;
-  media: Media[];
+  media: Media;
 };

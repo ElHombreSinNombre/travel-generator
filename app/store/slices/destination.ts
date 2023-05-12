@@ -12,6 +12,7 @@ export const destinationSlice = createSlice({
 });
 
 export const { setDestination } = destinationSlice.actions;
+export default destinationSlice.reducer;
+
 export const selectedDestinationName = (state: { destination: Destination }) =>
   state.destination?.name;
-export default destinationSlice.reducer;

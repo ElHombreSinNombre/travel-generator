@@ -1,4 +1,4 @@
-# Dall-E travel generator
+# OpenIA travel generator
 
 Technologies
 

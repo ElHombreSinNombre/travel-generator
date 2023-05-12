@@ -22,11 +22,11 @@ import { setItinerary, itineraryActivities } from "./store/slices/itinerary";
 import { setMedias, allMedias } from "./store/slices/media";
 import { Itinerary } from "./models/itinerary";
 import { searchItinerary, getImages } from "./endpoints/itinerary";
-import { motion } from "framer-motion";
 import { Options } from "./models/options";
 import Gallery from "./components/Gallery";
 import Image from "next/image";
 import Searcher from "./components/Select/Searcher";
+import FadeIn from "./components/Framer/FadeIn/FadeIn";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ const Home = () => {
       if (process.env.NEXT_PUBLIC_Pexels) {
         const promises = itinerary.map(async (element: Itinerary) => {
           const image = await getImages(element.activity, 1);
-          return { ...element, media: image };
+          return { ...element, media: image.at(0) };
         });
         const itineraryWithMedia = await Promise.all(promises);
         dispatch(setItinerary(itineraryWithMedia));
@@ -94,11 +94,7 @@ const Home = () => {
   const Itineraries = () => {
     if (itinerary && itinerary.length) {
       return (
-        <motion.div
-          initial={{ opacity: 0, x: -50, y: 0 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <FadeIn>
           <div className="card pa-2 hover:shadow-lg hover:border-black border">
             <div className="grid gap-y-4">
               <div className="flex overflow-x-scroll sm:overflow-x-scroll snap-x-mandatory snap-align-start md:overflow-x-hidden md:hover:overflow-x-auto">
@@ -107,13 +103,13 @@ const Home = () => {
                     key={itinerary.id}
                     className="sm:snap-center max-w-sm rounded border-opacity-10 border-black border flex-grow-1 flex-shrink-0 mx-2 p-4 m-4 hover:shadow-md"
                   >
-                    {itinerary.media && itinerary.media.length > 0 ? (
+                    {itinerary.media ? (
                       <Image
                         width={350}
                         height={300}
-                        alt={itinerary.media.at(0)?.alt || ""}
-                        src={itinerary.media.at(0)?.photo || ""}
-                        title={itinerary.media.at(0)?.alt || ""}
+                        alt={itinerary.media.alt}
+                        src={itinerary.media.photo}
+                        title={itinerary.media.alt}
                       />
                     ) : (
                       <div
@@ -135,7 +131,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </FadeIn>
       );
     }
     return null;
@@ -144,17 +140,13 @@ const Home = () => {
   const ImageGallery = () => {
     if (medias && medias.length) {
       return (
-        <motion.div
-          initial={{ opacity: 0, x: -50, y: 0 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <FadeIn>
           <div className="card grid gap-y-4 hover:shadow-lg hover:border-black border">
             <p className="text-2xl font-bold ">{destination}</p>
             <Gallery items={medias} />
             <ExtraInfo />
           </div>
-        </motion.div>
+        </FadeIn>
       );
     } else {
       return null;
@@ -198,16 +190,12 @@ const Home = () => {
   const ToastMessage = () => {
     if (error) {
       return (
-        <motion.div
-          initial={{ opacity: 0, x: -50, y: 0 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <FadeIn>
           <Toast
             text="Check API Key or internet connection"
             backgroundColor="error"
           />
-        </motion.div>
+        </FadeIn>
       );
     } else {
       return null;

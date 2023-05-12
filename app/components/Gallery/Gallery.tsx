@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Lightbox from "../Framer/Lightbox/Lightbox";
 import "./gallery.scss";
 
 interface GalleryProps {
@@ -46,21 +47,19 @@ function Gallery({ items }: GalleryProps) {
   return (
     <div className="gallery-container">
       <div className="gallery rounded-lg">
-        <div>
-          <div
-            title="Previous"
-            className="arrows left opacity-50 hover:opacity-100 transition duration-500 ease-in-out"
-            onClick={handlePrevious}
-          >
-            <NavArrowLeft />
-          </div>
-          <div
-            title="Next"
-            className="arrows right opacity-50 hover:opacity-100 transition duration-500 ease-in-out"
-            onClick={handleNext}
-          >
-            <NavArrowRight />
-          </div>
+        <div
+          title="Previous"
+          className="arrows left opacity-50 hover:opacity-100 transition duration-500 ease-in-out"
+          onClick={handlePrevious}
+        >
+          <NavArrowLeft />
+        </div>
+        <div
+          title="Next"
+          className="arrows right opacity-50 hover:opacity-100 transition duration-500 ease-in-out"
+          onClick={handleNext}
+        >
+          <NavArrowRight />
         </div>
         {items.map((item) => (
           <AnimatePresence initial={false} key={item.id}>
@@ -100,27 +99,12 @@ function Gallery({ items }: GalleryProps) {
           ))}
         </div>
       </div>
-      <AnimatePresence>
-        {lightboxIsOpen && (
-          <motion.div
-            title="Click to close"
-            onClick={closeLightbox}
-            className="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.img
-              src={items[lightboxIndex].photo}
-              alt={items[lightboxIndex].alt}
-              className="img"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        items={items}
+        selectedIndex={lightboxIndex}
+        isOpen={lightboxIsOpen}
+        onClick={closeLightbox}
+      />
     </div>
   );
 }
