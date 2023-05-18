@@ -5,7 +5,9 @@ import { Media } from "@/app/models/media";
 const itinerarySlice = createSlice({
   name: "medias",
   initialState: [] as Media[] | null,
-  reducers: {},
+  reducers: {
+    clearMedias: () => null,
+  },
   extraReducers: (builder) => {
     builder.addCase(fecthAllMedias.fulfilled, (_, action) => {
       return action.payload;
@@ -13,5 +15,5 @@ const itinerarySlice = createSlice({
   },
 });
 
-export const {} = itinerarySlice.actions;
+export const { clearMedias } = itinerarySlice.actions;
 export default itinerarySlice.reducer;
