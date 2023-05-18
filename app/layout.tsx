@@ -8,8 +8,6 @@ export const metadata = {
   description: "Basic IA travel planner",
 };
 
-//const google = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GooglePlace}`;
-
 export default function RootLayout({
   children,
 }: {
@@ -22,7 +20,6 @@ export default function RootLayout({
       <html lang="es">
         <body>{children}</body>
       </html>
-      {/* <script async defer src={google}></script>*/}
     </Provider>
   );
 }

@@ -4,14 +4,16 @@ type ButtonProps = {
   loading?: boolean;
   disabled?: boolean;
   backgroundColor?: string;
+  text?: string;
   type?: "submit" | "reset" | "button";
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 };
 
 const Button = ({
   loading = false,
   type = "submit",
   disabled = false,
+  text = "Save",
   backgroundColor = "secondary",
   onClick,
 }: ButtonProps) => {
@@ -28,7 +30,7 @@ const Button = ({
           : `button ${backgroundColor} hover:bg-indigo-500 `
       }
     >
-      {loading ? <Spinner /> : "Generate"}
+      {loading ? <Spinner /> : text}
     </button>
   );
 };

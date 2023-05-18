@@ -17,25 +17,27 @@ import Input from "./components/Input";
 import Divider from "./components/Divider";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectedDestinationName } from "./store/slices/destination";
-import { setItinerary, itineraryActivities } from "./store/slices/itinerary";
-import { setMedias, allMedias } from "./store/slices/media";
 import { Itinerary } from "./models/itinerary";
-import { searchItinerary, getImages } from "./endpoints/itinerary";
 import { Options } from "./models/options";
 import Gallery from "./components/Gallery";
 import Image from "next/image";
 import Searcher from "./components/Select/Searcher";
 import FadeIn from "./components/Framer/FadeIn/FadeIn";
+import { fecthAllMedias, fetchItineraryAndMedia } from "./store/thunks";
+import { Media } from "./models/media";
+import { setApis } from "./store/slices/apis";
+import { selectedDestinationName } from "@/app/store/slices/destination";
 
 const Home = () => {
   const dispatch = useDispatch();
 
   const destination = useSelector(selectedDestinationName);
 
-  const itinerary = useSelector(itineraryActivities);
+  const itinerary = useSelector(
+    (state: { itinerary: Itinerary[] }) => state.itinerary
+  );
 
-  const medias = useSelector(allMedias);
+  const medias = useSelector((state: { medias: Media[] }) => state.medias);
 
   const [error, setError] = useState<boolean>(false);
 
@@ -54,39 +56,49 @@ const Home = () => {
 
   const [option, setOption] = useState<Options>(options[0]);
 
+  useEffect(() => {
+    const fetchApis = async () => {
+      await dispatch(
+        setApis({
+          openia: process.env.NEXT_PUBLIC_OpenAI,
+          pexels: process.env.NEXT_PUBLIC_Pexels,
+          google: process.env.NEXT_PUBLIC_GooglePlace,
+        })
+      );
+    };
+    fetchApis();
+    setLanguage(
+      typeof window !== "undefined" ? window.navigator.language : "EN-en"
+    );
+  }, [dispatch]);
+
   const generate = () => {
     setLoading(true);
     setError(false);
-    dispatch(setItinerary([]));
     setTimeout(getStore, 300);
   };
 
   async function getStore() {
-    setMedias([]);
-    dispatch(setItinerary([]));
     try {
-      const itinerary = await searchItinerary(
-        destination,
-        language,
-        numActivities,
-        option.name
+      dispatch(
+        fetchItineraryAndMedia({
+          destination,
+          language,
+          numActivities,
+          option: option.name,
+        }) as any
       );
-      if (process.env.NEXT_PUBLIC_Pexels) {
-        const promises = itinerary.map(async (element: Itinerary) => {
-          const image = await getImages(element.activity, 1);
-          return { ...element, media: image.at(0) };
-        });
-        const itineraryWithMedia = await Promise.all(promises);
-        dispatch(setItinerary(itineraryWithMedia));
-        const media = await getImages(destination, 5);
-        dispatch(setMedias(media));
-        console.log(medias);
-      } else {
-        dispatch(setItinerary(itinerary));
-      }
-      setLoading(false);
-    } catch (error) {
+
+      dispatch(
+        fecthAllMedias({
+          destination,
+          quantity: 5,
+        }) as any
+      );
+    } catch (e) {
       setError(true);
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
   }
@@ -95,7 +107,7 @@ const Home = () => {
     if (itinerary && itinerary.length) {
       return (
         <FadeIn>
-          <div className="card pa-2 hover:shadow-lg hover:border-black border">
+          <div className="card pa-2">
             <div className="grid gap-y-4">
               <div className="flex overflow-x-scroll sm:overflow-x-scroll snap-x-mandatory snap-align-start md:overflow-x-hidden md:hover:overflow-x-auto">
                 {itinerary.map((itinerary: Itinerary) => (
@@ -141,7 +153,7 @@ const Home = () => {
     if (medias && medias.length) {
       return (
         <FadeIn>
-          <div className="card grid gap-y-4 hover:shadow-lg hover:border-black border">
+          <div className="card grid gap-y-4">
             <p className="text-2xl font-bold ">{destination}</p>
             <Gallery items={medias} />
             <ExtraInfo />
@@ -159,7 +171,7 @@ const Home = () => {
         <Divider />
         <div className="flex gap-x-4 items-center justify-center">
           <a
-            className=" cursor-pointer hover:text-red-700"
+            className="cursor-pointer hover:text-red-700 transition duration-500"
             title="Youtube"
             target="_blank"
             href={`https://www.youtube.com/results?search_query=${destination}`}
@@ -167,7 +179,7 @@ const Home = () => {
             <YouTube />
           </a>
           <a
-            className="cursor-pointer hover:text-blue-700"
+            className="cursor-pointer hover:text-blue-700 transition duration-500"
             title="Wikipedia"
             target="_blank"
             href={`https://wikipedia.org/wiki/${destination}`}
@@ -175,7 +187,7 @@ const Home = () => {
             <InfoEmpty />
           </a>
           <a
-            className="cursor-pointer hover:text-green-700"
+            className="cursor-pointer hover:text-green-700 transition duration-500"
             title="Google maps"
             target="_blank"
             href={`http://maps.google.com/?q=${destination}`}
@@ -191,10 +203,7 @@ const Home = () => {
     if (error) {
       return (
         <FadeIn>
-          <Toast
-            text="Check API Key or internet connection"
-            backgroundColor="error"
-          />
+          <Toast text="Check internet connection" backgroundColor="error" />
         </FadeIn>
       );
     } else {
@@ -202,32 +211,23 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    setLanguage(
-      typeof window !== "undefined" ? window.navigator.language : "EN-en"
-    );
-  }, []);
-
   return (
     <main className="center ">
       <div className="flex flex-col overflow-hidden m-8 max-w-full gap-14">
-        <div className="card max-w-5xl mx-auto border hover:shadow-lg hover:border-black ">
+        <div className="card max-w-5xl mx-auto max-w-sm ">
           <PinAlt className="my-3 w-full" width="2em" height="2em" />
           <Searcher />
           <div className="grid-container grid  grid grid-cols-1 md:grid-cols-3 gap-2">
             <div className="col-span-2">
-              <Select
-                items={options}
-                name="Options"
-                onChange={(selected) => setOption(selected)}
-                value={option}
-              />
+              <Select items={options} mandatory onChange={setOption} />
             </div>
             <div className="col-span-1">
               <Input
+                required
                 placeholder="Days"
                 onChange={(value) => setNumActivities(+value)}
                 type="number"
+                name="days"
                 value={numActivities}
                 min={1}
                 max={7}
@@ -236,7 +236,8 @@ const Home = () => {
           </div>
           <Button
             onClick={generate}
-            disabled={numActivities && destination ? false : true}
+            text="Generate"
+            disabled={!destination}
             loading={loading}
           />
           <ToastMessage />

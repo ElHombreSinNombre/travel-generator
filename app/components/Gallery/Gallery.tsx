@@ -46,7 +46,7 @@ function Gallery({ items }: GalleryProps) {
 
   return (
     <div className="gallery-container">
-      <div className="gallery rounded-lg">
+      <div className="gallery rounded">
         <div
           title="Previous"
           className="arrows left opacity-50 hover:opacity-100 transition duration-500 ease-in-out"

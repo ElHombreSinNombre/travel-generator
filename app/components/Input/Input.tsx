@@ -1,21 +1,33 @@
 type InputProps = {
+  maxlength?: number;
+  minlength?: number;
   max?: number;
   min?: number;
   type?: string;
   name?: string;
-  value?: number;
+  value?: number | string;
+  required?: boolean;
   placeholder?: string;
+  disabled?: boolean;
+  autofocus?: boolean;
   onChange?: (value: string | number) => void;
+  onFocus?: () => void;
 };
 
 function Input({
   max,
   min,
+  autofocus,
+  required = false,
   type = "text",
   name,
+  disabled,
   placeholder,
+  maxlength,
+  minlength,
   value,
   onChange,
+  onFocus,
 }: InputProps) {
   const change = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -31,6 +43,10 @@ function Input({
 
   return (
     <input
+      autoFocus={autofocus}
+      disabled={disabled}
+      onFocus={onFocus}
+      required={required}
       type={type}
       onChange={change}
       onKeyDown={keyDown}
@@ -38,8 +54,10 @@ function Input({
       value={value}
       max={max}
       min={min}
+      minLength={minlength}
+      maxLength={maxlength}
       placeholder={placeholder}
-      className="input focus:outline-none focus:shadow-outline"
+      className="input"
     />
   );
 }

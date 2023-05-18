@@ -26,18 +26,21 @@ body {
 }
 
 @layer base {
-  .input,
-  .select {
+  .input {
     @apply shadow appearance-none border rounded w-full my-2 py-3 px-4 text-gray-700 leading-tight;
+    &:focus {
+      @apply outline-none;
+    }
   }
-
   .select {
+    @extend .input;
+    @apply pb-2;
     @apply cursor-pointer;
   }
 }
 
 .button {
-  @apply inline-flex items-center my-2 justify-center w-full border py-3 px-4 rounded-md select-none transition duration-500 ease-in-out;
+  @apply inline-flex items-center my-2 justify-center w-full border py-3 px-4 rounded select-none transition duration-500 ease-in-out;
 
   &.primary {
     @apply border-teal-400 bg-teal-400 text-white;
@@ -55,6 +58,9 @@ body {
 
   .card {
     @apply bg-white shadow-md rounded  border p-6 transition duration-500 ease-in-out;
+    &:hover {
+      @apply border-black shadow-lg;
+    }
   }
 
   .toast {

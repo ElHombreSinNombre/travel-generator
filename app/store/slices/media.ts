@@ -1,20 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fecthAllMedias } from "../thunks";
 import { Media } from "@/app/models/media";
 
-const initialState: { media: Media[] } = { media: [] };
-
-export const mediaSlice = createSlice({
-  name: "media",
-  initialState,
-  reducers: {
-    setMedias: (state, action: PayloadAction<Media[]>) => {
-      state.media = action.payload;
-    },
+const itinerarySlice = createSlice({
+  name: "medias",
+  initialState: [] as Media[] | null,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fecthAllMedias.fulfilled, (_, action) => {
+      return action.payload;
+    });
   },
 });
 
-export const { setMedias } = mediaSlice.actions;
-export default mediaSlice.reducer;
-
-export const allMedias = (state: { medias: { media: Media[] } }) =>
-  state.medias.media;
+export const {} = itinerarySlice.actions;
+export default itinerarySlice.reducer;
