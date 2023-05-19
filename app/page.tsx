@@ -27,8 +27,8 @@ import { fecthAllMedias, fetchItineraryAndMedia } from "./store/thunks";
 import { Media } from "./models/media";
 import { setApis } from "./store/slices/apis";
 import { selectedDestinationName } from "@/app/store/slices/destination";
-import { clearItineraryAndMedia } from "@/app/store/slices/itinerary";
-import { clearMedias } from "@/app/store/slices/media";
+import { clearItinerary } from "@/app/store/reducers/itinerary";
+import { clearMedias } from "@/app/store/reducers/media";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ const Home = () => {
 
   async function getStore() {
     try {
-      dispatch(clearItineraryAndMedia());
+      dispatch(clearItinerary());
       dispatch(clearMedias());
       const itineraryAndMedia = dispatch(
         fetchItineraryAndMedia({
