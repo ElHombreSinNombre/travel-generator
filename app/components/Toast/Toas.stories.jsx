@@ -1,28 +1,28 @@
-import Toast from "./Toast";
+import Toast from '@/components/Toast/Toast'
 
 const toast = {
-  title: "components/toast",
+  title: 'components/toast',
   component: toast,
   args: {
-    children: "This is a test",
-  },
-};
+    children: 'This is a test'
+  }
+}
 
-export default toast;
+export default toast
 
-const Template = (args) => <Toast {...args} />;
+const Template = (args) => <Toast {...args} />
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 Primary.args = {
-  type: "primary",
-};
+  type: 'primary'
+}
 
-export const Secondary = Template.bind({});
+export const Secondary = Template.bind({})
 Secondary.args = {
-  type: "secondary",
-};
+  type: 'secondary'
+}
 
-export const Error = Template.bind({});
+export const Error = Template.bind({})
 Error.args = {
-  type: "error",
-};
+  type: 'error'
+}

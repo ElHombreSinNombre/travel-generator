@@ -12,24 +12,19 @@
       @apply border-2 border-black absolute top-1/2 w-10 h-10 rounded-full bg-white p-2 cursor-pointer flex justify-center items-center z-10;
 
       &.left {
-        left: 20px;
+        @apply left-5;
       }
 
       &.right {
-        right: 20px;
+        @apply right-5;
       }
     }
   }
   .dots {
-    @apply cursor-pointer absolute flex justify-center items-center;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 5px;
+    @apply cursor-pointer absolute flex justify-center items-center bottom-0 left-0 right-0 m-1;
 
     .dot {
-      @apply w-2 h-2 rounded-full bg-white border border-black;
-      margin: 0 5px;
+      @apply w-2 h-2 rounded-full bg-white border border-black mx-1 my-0;
 
       &.active {
         @apply bg-black border-white border;

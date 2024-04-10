@@ -1,17 +1,15 @@
-import { Itinerary } from "../models/itinerary";
+import { Itinerary } from '@/types/itinerary'
 
-const itineraryParser = (data: string) => {
-  const parsedData = JSON.parse(data);
-  return parsedData.itinerary.map((itineraryData: any) => {
-    const itinerary: Itinerary = {
-      id: itineraryData.id,
-      activity: itineraryData.activity,
-      description: itineraryData.description,
-      media: itineraryData.media,
-      location: itineraryData.location,
-    };
-    return itinerary;
-  });
-};
+const itineraryParser = (itineraries: Itinerary[]) => {
+  return itineraries.map((itinerary: Itinerary) => {
+    return {
+      id: itinerary.id,
+      activity: itinerary.activity,
+      description: itinerary.description,
+      media: itinerary.media,
+      location: itinerary.location
+    }
+  })
+}
 
-export default itineraryParser;
+export default itineraryParser

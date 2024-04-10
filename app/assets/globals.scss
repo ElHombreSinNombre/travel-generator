@@ -12,17 +12,15 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  @apply: w-1.5;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-white;
-  border-radius: 10px;
+  @apply bg-white rounded-lg;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-black;
-  border-radius: 10px;
+  @apply bg-black rounded-lg;
 }
 
 @layer base {
@@ -91,4 +89,3 @@ body {
     }
   }
 }
-

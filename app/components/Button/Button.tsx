@@ -1,21 +1,21 @@
-import Spinner from "../Spinner";
+import Spinner from '@/components/Spinner/Spinner'
 
 type ButtonProps = {
-  loading?: boolean;
-  disabled?: boolean;
-  backgroundColor?: string;
-  text?: string;
-  type?: "submit" | "reset" | "button";
-  onClick?: (e: any) => void;
-};
+  loading?: boolean
+  disabled?: boolean
+  backgroundColor?: string
+  text?: string
+  type?: 'submit' | 'reset' | 'button'
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
 
 const Button = ({
   loading = false,
-  type = "submit",
+  type = 'submit',
   disabled = false,
-  text = "Save",
-  backgroundColor = "secondary",
-  onClick,
+  text = 'Save',
+  backgroundColor = 'secondary',
+  onClick
 }: ButtonProps) => {
   return (
     <button
@@ -32,7 +32,7 @@ const Button = ({
     >
       {loading ? <Spinner /> : text}
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

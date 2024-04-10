@@ -1,1 +1,1 @@
-export { default } from "./FadeIn";
+export { default } from '@/components/Framer/FadeIn/FadeIn'

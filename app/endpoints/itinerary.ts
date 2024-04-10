@@ -1,68 +1,66 @@
-import { Itinerary } from "../models/itinerary";
-import itineraryParser from "../parsers/itinerary";
-import axios from "axios";
-import { Media } from "../models/media";
-import mediaParsers from "../parsers/media";
-import store from "../store";
-import openaiInstance from "../utils/openia";
+import { Media } from '@/types/media'
+import mediaParsers from '@/parsers/media'
+import itineraryParsers from '@/parsers/itinerary'
+import OpenAI from 'openai'
+import { Itinerary } from '@/types/itinerary'
 
-export const getItinerary = async (
-  destination: string,
-  language: string,
-  number: number,
+const apiKey = process.env.OPENAI_API_KEY
+
+const openai = new OpenAI({
+  apiKey: apiKey
+})
+
+export const getItinerary = async ({
+  destination,
+  language,
+  numActivities,
+  option
+}: {
+  destination: string
+  language: string
+  numActivities: number
   option: string
-): Promise<Itinerary[]> => {
-  const prompt = `Créame un itinerario con ${number} actividades sobre ${destination} centrado en ${option}, los valores tienen que estar en el idioma que significa este código ${language} . Para ello, create un JSON que tenga solo id, activity, description y location de la actividad. La raiz del JSON tiene que llamarse itinerary. Solo quiero el itinerario, sin ninguna otra explicación.`;
+}): Promise<Itinerary[]> => {
+  const prompt = `Créame un itinerario con ${numActivities} actividades sobre ${destination} centrado en ${option}, los valores tienen que estar en el idioma que significa este código ${language} . Para ello, create un JSON que tenga solo id, activity, description y location de la actividad. La raiz del JSON tiene que llamarse itinerary. Solo quiero el itinerario, sin ninguna otra explicación.`
   try {
-    const openai = await openaiInstance.getInstance(
-      store.getState().apis.openia
-    );
-    const res = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "assistant",
-          content: prompt,
-        },
-      ],
-    });
-    if (!res.data?.choices) {
-      throw new Error("No response was received from the OpenAI API.");
-    }
-    const content = res.data.choices && res.data.choices[0]?.message?.content;
-    if (!content) {
-      throw new Error(
-        "The response from the OpenAI API does not contain valid content."
-      );
-    }
-    return itineraryParser(content);
+    const res = await openai.chat.completions.create({
+      messages: [{ role: 'user', content: prompt }],
+      model: 'gpt-3.5-turbo'
+    })
+    const content = res.choices && res.choices[0]?.message?.content
+    if (!content) throw new Error('No content was received')
+    return itineraryParsers(JSON.parse(content))
   } catch (error) {
-    throw new Error("Failed to fetch itineraries");
+    throw new Error('Failed to fetch itineraries')
   }
-};
+}
 
-export const getImages = async (
-  name: string,
+export const getImages = async ({
+  name,
+  quantity
+}: {
+  name: string
   quantity: number
-): Promise<Media[]> => {
+}): Promise<Media[]> => {
   try {
-    const res = await axios.get("https://api.pexels.com/v1/search", {
-      headers: {
-        Authorization: store.getState().apis.pexels,
-      },
-      params: {
-        size: "medium",
-        query: name,
-        per_page: quantity,
-        page: Math.floor(Math.random() * quantity) + 1,
-      },
-    });
-    const data = res.data;
-    if (!data) {
-      throw new Error("No data was received.");
+    if (!apiKey) throw new Error('Pexels API Key is not defined')
+    const params = {
+      size: 'medium',
+      query: name,
+      per_page: quantity.toString(),
+      page: (Math.floor(Math.random() * quantity) + 1).toString()
     }
-    return mediaParsers(data.photos);
+    const url = new URL('https://api.pexels.com/v1/search')
+    url.search = new URLSearchParams(params).toString()
+    const response = await fetch(url, {
+      headers: {
+        Authorization: apiKey
+      }
+    })
+    const data = await response.json()
+    if (!data) throw new Error('No data was received')
+    return mediaParsers(data.photos)
   } catch (error) {
-    throw new Error("Failed to fetch images");
+    throw new Error('Failed to fetch images')
   }
-};
+}

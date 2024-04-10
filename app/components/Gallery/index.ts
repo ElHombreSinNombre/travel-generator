@@ -1,1 +1,1 @@
-export { default } from "./Gallery";
+export { default } from '@/components/Gallery/Gallery'

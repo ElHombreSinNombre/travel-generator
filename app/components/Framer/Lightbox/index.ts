@@ -1,1 +1,1 @@
-export { default } from "./Lightbox.tsx";
+export { default } from '@/components/Framer/Lightbox/Lightbox'

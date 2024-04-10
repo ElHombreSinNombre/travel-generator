@@ -8,7 +8,7 @@ Technologies
 - **[NextJS](https://nextjs.org/)**
 - **[Framer](https://www.framer.com/motion/)**
 
-Clone _.env.example_ and rename as _.env.local_
+Clone _.env.local.example_ and rename as _.env.local_
 
 - Change **[OpenIA API KEY](https://platform.openai.com/account/api-keys)**
 - Change **[Google API KEY](https://console.cloud.google.com/projectselector/google/maps-apis)**

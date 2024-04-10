@@ -1,21 +1,21 @@
-import Spinner from "./Spinner";
+import Spinner from '@/components/Spinner/Spinner'
 
 const spinner = {
-  title: "components/Spinner",
+  title: 'components/Spinner',
   component: Spinner,
-  args: {},
-};
+  args: {}
+}
 
-export default spinner;
+export default spinner
 
-const Template = (args) => <Spinner {...args} />;
+const Template = (args) => <Spinner {...args} />
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 Primary.args = {
-  type: "primary",
-};
+  type: 'primary'
+}
 
-export const Secondary = Template.bind({});
+export const Secondary = Template.bind({})
 Secondary.args = {
-  type: "secondary",
-};
+  type: 'secondary'
+}

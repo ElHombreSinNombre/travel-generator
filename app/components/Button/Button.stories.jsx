@@ -1,23 +1,23 @@
-import Button from "./Button";
+import Button from '@/components/Button/Button'
 
 const button = {
-  title: "components/Button",
+  title: 'components/Button',
   component: Button,
   args: {
-    children: "Button",
-  },
-};
+    children: 'Button'
+  }
+}
 
-export default button;
+export default button
 
-const Template = (args) => <Button {...args} />;
+const Template = (args) => <Button {...args} />
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 Primary.args = {
-  type: "primary",
-};
+  type: 'primary'
+}
 
-export const Secondary = Template.bind({});
+export const Secondary = Template.bind({})
 Secondary.args = {
-  type: "secondary",
-};
+  type: 'secondary'
+}

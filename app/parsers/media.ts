@@ -1,14 +1,14 @@
-import { Media } from "../models/media";
+import { Media } from '@/types/media'
 
-const mediaParsers = (data: any): Media[] => {
-  const photos = data.map((photo: any) => {
+const mediaParsers = (data: Media[]) => {
+  const photos = data.map((photo: Media) => {
     return {
       id: photo.id,
       alt: photo.alt,
-      photo: photo.src.landscape,
-    };
-  });
-  return photos;
-};
+      src: { landscape: photo.src.landscape }
+    }
+  })
+  return photos
+}
 
-export default mediaParsers;
+export default mediaParsers

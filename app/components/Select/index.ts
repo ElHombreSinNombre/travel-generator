@@ -1,1 +1,1 @@
-export { default } from "./Select";
+export { default } from '@/components/Select/Select'
