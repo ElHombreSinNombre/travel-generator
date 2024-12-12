@@ -3,12 +3,13 @@ import mediaParsers from '@/parsers/media'
 import itineraryParsers from '@/parsers/itinerary'
 import OpenAI from 'openai'
 import { Itinerary } from '@/types/itinerary'
-
-const apiKey = process.env.OPENAI_API_KEY
+import { EnvConfig } from '@/utils/env.config'
 
 const openai = new OpenAI({
-  apiKey: apiKey
+  apiKey: EnvConfig().openaiKey
 })
+
+const pexelsKey = EnvConfig().pexelsKey
 
 export const getItinerary = async ({
   destination,
@@ -43,7 +44,7 @@ export const getImages = async ({
   quantity: number
 }): Promise<Media[]> => {
   try {
-    if (!apiKey) throw new Error('Pexels API Key is not defined')
+    if (!pexelsKey) throw new Error('Pexels API Key is incorrect')
     const params = {
       size: 'medium',
       query: name,
@@ -54,7 +55,7 @@ export const getImages = async ({
     url.search = new URLSearchParams(params).toString()
     const response = await fetch(url, {
       headers: {
-        Authorization: apiKey
+        Authorization: pexelsKey
       }
     })
     const data = await response.json()

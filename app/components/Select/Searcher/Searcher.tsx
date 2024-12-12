@@ -9,6 +9,7 @@ import { AnimatePresence } from 'framer-motion'
 import List from '@/components/Framer/List'
 import Spinner from '@/components/Spinner'
 import { useDestinationStore } from '@/store/destination'
+import { EnvConfig } from '@/utils/env.config'
 
 declare global {
   interface Window {
@@ -24,7 +25,7 @@ function Searcher() {
   const [searchValue, setSearchValue] = useState<string | null>(null)
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [loading, setLoading] = useState<boolean>(false)
-  const googleKey = process.env.NEXT_PUBLIC_GOOGLE_KEY
+  const googleKey = EnvConfig().googleKey
 
   const changeSelect = (selected: Destination) => {
     setDestination(selected)

@@ -1,7 +1,8 @@
 import { getImages, getItinerary } from '@/endpoints/itinerary'
 import { Itinerary } from '@/types/itinerary'
+import { EnvConfig } from '@/utils/env.config'
 
-const apiKey = process.env.PEXELS_API_KEY
+const pexelsKey = EnvConfig().pexelsKey
 
 const addImage = async ({
   destination,
@@ -14,18 +15,16 @@ const addImage = async ({
   numActivities: number
   option: string
 }): Promise<Itinerary[]> => {
-  if (!apiKey) throw new Error('Pexels API Key is not defined')
+  if (!pexelsKey) throw new Error('Pexels API Key is incorrect')
   let itineraries = await getItinerary({
     destination,
     language,
     numActivities,
     option
   })
-  if (apiKey && itineraries) {
+  if (!pexelsKey && itineraries) {
     itineraries = await Promise.all(
-      (
-        await itineraries
-      ).map(async (element: Itinerary) => {
+      (await itineraries).map(async (element: Itinerary) => {
         const image = await getImages({ name: element.activity, quantity: 5 })
         return { ...element, media: image.at(0) }
       })
