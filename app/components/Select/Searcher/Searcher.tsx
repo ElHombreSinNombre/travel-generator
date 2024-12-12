@@ -25,7 +25,7 @@ function Searcher() {
   const [searchValue, setSearchValue] = useState<string | null>(null)
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [loading, setLoading] = useState<boolean>(false)
-  const googleKey = EnvConfig().googleKey
+  const googleKey = EnvConfig().google_api_key
 
   const changeSelect = (selected: Destination) => {
     setDestination(selected)

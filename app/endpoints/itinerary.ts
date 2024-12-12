@@ -6,10 +6,10 @@ import { Itinerary } from '@/types/itinerary'
 import { EnvConfig } from '@/utils/env.config'
 
 const openai = new OpenAI({
-  apiKey: EnvConfig().openaiKey
+  apiKey: EnvConfig().gpt_api_key
 })
 
-const pexelsKey = EnvConfig().pexelsKey
+const pexelsKey = EnvConfig().pexels_api_key
 
 export const getItinerary = async ({
   destination,

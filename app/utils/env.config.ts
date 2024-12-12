@@ -1,15 +1,11 @@
 const {
-  GOOGLE_API_KEY: googleKey = '',
-  OPENAI_API_KEY: openaiKey = '',
-  PEXELS_API_KEY: pexelsKey = ''
+  GOOGLE_API_KEY: google_api_key = '',
+  OPENAI_API_KEY: gpt_api_key = '',
+  PEXELS_API_KEY: pexels_api_key = ''
 } = process.env
 
-if (!googleKey || !openaiKey || !pexelsKey) {
-  throw new Error('Missing environment variables')
-}
-
 export const EnvConfig = () => ({
-  openaiKey,
-  googleKey,
-  pexelsKey
+  gpt_api_key,
+  google_api_key,
+  pexels_api_key
 })
