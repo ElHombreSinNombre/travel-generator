@@ -1,20 +1,18 @@
 # OpenAI Travel Generator
 
-A powerful travel itinerary generator application powered by **OpenAI**.
+A travel itinerary generator application.
 
 ##  Technologies
 
-* **[Next.js](https://nextjs.org/)** - For a full-stack React framework and enhanced performance.
-* **[React](https://react.dev/)** - The core library for building the user interface.
-* **[Tailwind CSS](https://tailwindcss.com/)** - For utility-first styling and rapid UI development.
-* **[Zustand](https://zustand-demo.pmnd.rs/)** - A small, fast, and scalable state management solution.
-* **[Framer Motion](https://www.framer.com/motion/)** - For smooth, production-ready animations.
-
+* **[Next.js](https://nextjs.org/)**
+* **[React](https://react.dev/)** 
+* **[Tailwind CSS](https://tailwindcss.com/)** 
+* **[Zustand](https://zustand-demo.pmnd.rs/)** 
+* **[Framer Motion](https://www.framer.com/motion/)**
 
 ## How to deploy
 
-**Rename** `.env.local.example` to `.env.local`.
-**Fill in** the following API keys in your new `.env.local` file:
+**Rename** `.env.local.example` to `.env.local` and **fill in** the following API keys:
 
 | API Key | Source |
 | :--- | :--- |
@@ -42,3 +40,4 @@ To run Storybook:
 
 ```bash
 npm run storybook
+
