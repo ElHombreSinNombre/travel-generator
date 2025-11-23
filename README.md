@@ -1,30 +1,44 @@
-# OpenIA travel generator
+# OpenAI Travel Generator
 
-Technologies
+A powerful travel itinerary generator application powered by **OpenAI**.
 
-- **[React](https://react.dev/)**
-- **[Tailwind](https://tailwindcss.com/)**
-- **[Zustand](https://zustand-demo.pmnd.rs/)**
-- **[NextJS](https://nextjs.org/)**
-- **[Framer](https://www.framer.com/motion/)**
+##  Technologies
 
-Clone _.env.local.example_ and rename as _.env.local_
+* **[Next.js](https://nextjs.org/)** - For a full-stack React framework and enhanced performance.
+* **[React](https://react.dev/)** - The core library for building the user interface.
+* **[Tailwind CSS](https://tailwindcss.com/)** - For utility-first styling and rapid UI development.
+* **[Zustand](https://zustand-demo.pmnd.rs/)** - A small, fast, and scalable state management solution.
+* **[Framer Motion](https://www.framer.com/motion/)** - For smooth, production-ready animations.
 
-- Change **[OpenIA API KEY](https://platform.openai.com/account/api-keys)**
-- Change **[Google API KEY](https://console.cloud.google.com/projectselector/google/maps-apis)**
-- Change **[Pexels API KEY](https://www.pexels.com/api/)**
 
-Run
+## How to deploy
 
-- _npm install_
-- _npm run dev_
+**Rename** `.env.local.example` to `.env.local`.
+**Fill in** the following API keys in your new `.env.local` file:
 
-Utilities
+| API Key | Source |
+| :--- | :--- |
+| `OPENAI_API_KEY` | Get your key from the **[OpenAI Platform](https://platform.openai.com/account/api-keys)**. |
+| `GOOGLE_API_KEY` | Get your key from the **[Google Cloud Console](https://console.cloud.google.com/projectselector/google/maps-apis)**. |
+| `PEXELS_API_KEY` | Get your key from the **[Pexels API](https://www.pexels.com/api/)** documentation. |
 
-- **[Storybook](https://storybook.js.org/)**
+Run the following commands in your terminal
 
-  **Storybook** only has _button_, _spinner_ and _toast_ as example.
+```bash
+ npm install
+ npm run dev
+```
 
-Run
+The application will be accessible at `http://localhost:3000`.
 
-- _npm run storybook_
+### **Storybook**
+
+We use **[Storybook](https://storybook.js.org/)** for UI component development and documentation.
+
+> [!NOTE]
+> Storybook currently includes only basic components like **button**, **spinner**, and **toast** for demonstration purposes.
+
+To run Storybook:
+
+```bash
+npm run storybook
