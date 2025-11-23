@@ -1,4 +1,4 @@
-# OpenAI Travel Generator
+# Travel Generator
 
 A travel itinerary generator application.
 
@@ -40,4 +40,5 @@ To run Storybook:
 
 ```bash
 npm run storybook
+
 
